@@ -45,14 +45,14 @@ class TweetManager:
                 tweet = models.Tweet()
 
                 usernameTweet = tweetPQ("span.username.js-action-profile-name b").text();
-                txt = re.sub(r"\s+", " ", tweetPQ("p.js-tweet-text").text().replace('# ', '#').replace('@ ', '@'));
+                txt = re.sub(r"\s+", " ", tweetPQ("p.js-tweet-text").text().replace('# ', '#').replace('@ ', '@'))
                 retweets = int(tweetPQ("span.ProfileTweet-action--retweet span.ProfileTweet-actionCount").attr(
-                    "data-tweet-stat-count").replace(",", ""));
+                    "data-tweet-stat-count").replace(",", ""))
                 favorites = int(tweetPQ("span.ProfileTweet-action--favorite span.ProfileTweet-actionCount").attr(
-                    "data-tweet-stat-count").replace(",", ""));
+                    "data-tweet-stat-count").replace(",", ""))
                 dateSec = int(tweetPQ("small.time span.js-short-timestamp").attr("data-time"));
-                id = tweetPQ.attr("data-tweet-id");
-                permalink = tweetPQ.attr("data-permalink-path");
+                id = tweetPQ.attr("data-tweet-id")
+                permalink = tweetPQ.attr("data-permalink-path")
                 user_id = int(tweetPQ("a.js-user-profile-link").attr("data-user-id"))
 
                 geo = ''
@@ -87,7 +87,7 @@ class TweetManager:
                     receiveBuffer(resultsAux)
                     resultsAux = []
 
-                if tweetCriteria.maxTweets > 0 and len(results) >= tweetCriteria.maxTweets:
+                if 0 < tweetCriteria.maxTweets <= len(results):
                     active = False
                     break
 
@@ -114,7 +114,7 @@ class TweetManager:
             urlGetData += ' ' + tweetCriteria.querySearch
 
         if hasattr(tweetCriteria, 'lang'):
-            urlLang = 'lang=' + tweetCriteria.lang + '&'
+            urlLang = 'l=' + tweetCriteria.lang + '&'
         else:
             urlLang = ''
         url = url % (urllib.parse.quote(urlGetData), urlLang, refreshCursor)

@@ -23,7 +23,8 @@ def main(argv):
 
     try:
         opts, args = getopt.getopt(argv, "", (
-            "username=", "near=", "within=", "since=", "until=", "querysearch=", "toptweets", "maxtweets=", "output="))
+            "username=", "near=", "within=", "since=", "until=", "querysearch=", "toptweets", "maxtweets=", "output=",
+            "lang="))
 
         tweetCriteria = got.manager.TweetCriteria()
         outputFileName = "output_got.csv"
@@ -59,6 +60,9 @@ def main(argv):
             elif opt == '--output':
                 outputFileName = arg
 
+            if opt == '--lang':
+                tweetCriteria.lang = arg
+
         outputFile = codecs.open(outputFileName, "w+", "utf-8")
 
         outputFile.write('username;date;retweets;favorites;text;geo;mentions;hashtags;id;permalink')
@@ -70,7 +74,7 @@ def main(argv):
                 outputFile.write(('\n%s;%s;%d;%d;"%s";%s;%s;%s;"%s";%s' % (
                     t.username, t.date.strftime("%Y-%m-%d %H:%M"), t.retweets, t.favorites, t.text, t.geo, t.mentions,
                     t.hashtags, t.id, t.permalink)))
-            outputFile.flush();
+            outputFile.flush()
             print('More %d saved on file...\n' % len(tweets))
 
         got.manager.TweetManager.getTweets(tweetCriteria, receiveBuffer)
